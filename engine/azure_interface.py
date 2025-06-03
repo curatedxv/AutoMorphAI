@@ -5,7 +5,7 @@ from azure.identity import DefaultAzureCredential
 from azure.monitor.query import MetricsQueryClient
 from azure.mgmt.compute import ComputeManagementClient
 
-def get_vm_metrics(mins=5):
+def get_vm_metrics(minutes=5):
     sid = os.getenv("AZURE_SUBSCRIPTION_ID")
     rg = os.getenv("AZURE_RESOURCE_GROUP")
     vm = os.getenv("AZURE_VM_NAME")

@@ -1,4 +1,4 @@
-from ml.model import detect_anomalies, train_autoencoder
+from ml.model import detect, train_ae
 from engine.decision import make_decision
 from engine.azure_interface import apply_action, get_vm_metrics
 import pandas as pd
@@ -40,13 +40,13 @@ try:
                 "timestamp":pd.date_range("2023-01-01",periods=5,freq='min')
             })
         hist=pd.concat([hist,nm]).drop_duplicates(subset="timestamp")
-        train_autoencoder(hist.tail(100),epochs=20)
+        train_ae(hist.tail(100),epochs=20)
 
         cm = get_vm_metrics(minutes=5)
         if cm.empty:
             print("No real current metrics, using demo data for detection!")
             cm = nm.tail(5)
-        anomalies = detect_anomalies(cm)
+        anomalies = detect(cm)
         act = make_decision(anomalies)
 
         apply_action(act)
